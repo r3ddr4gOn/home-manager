@@ -11,7 +11,7 @@ let
 in
 {
   nixGL = {
-    #packages = nixGL.packages; # you must set this or everything will be a noop
+    packages = nixGL.packages; # you must set this or everything will be a noop
     defaultWrapper = "mesa"; # choose from nixGL options depending on GPU
     installScripts = [ "mesa" ];
   };
@@ -35,6 +35,7 @@ in
   home = {
     username = local.username;
     homeDirectory = "/home/${local.username}";
+    sessionPath = [ "/home/${local.username}/.nix-profile/bin" ];
     stateVersion = "25.05"; # should be changed manually after reading the home-manager upgrade notes
     packages = with pkgs; [
       bat
@@ -83,6 +84,7 @@ in
     CARAPACE_HIDDEN = 1;
     CARAPACE_LENIENT = 1;
     EDITOR = "hx";
+    XDG_DATA_DIRS = "/home/${local.username}/.nix-profile/share\${XDG_DATA_DIRS:+:}\$XDG_DATA_DIRS";
     SKIM_DEFAULT_COMMAND = "fd -u --type f"; # TODO: integrate with git-recursive on ks
     WORKSPACES_ROOT = "/work"; # Used by cdw/cdf aliases
   };
